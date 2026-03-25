@@ -1,0 +1,21 @@
+<h2>Admin Panel</h2>
+
+<button onclick="load()">Cargar usuarios</button>
+
+<ul id="list"></ul>
+
+<script>
+async function load(){
+  let res = await fetch("https://TU_API.com/top")
+  let users = await res.json()
+
+  let list = document.getElementById("list")
+  list.innerHTML = ""
+
+  users.forEach(u=>{
+    let li = document.createElement("li")
+    li.innerText = u.username + " - " + u.balance.toFixed(2)
+    list.appendChild(li)
+  })
+}
+</script>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TRX Miner</title>
+</head>
+<body>
+
+<h1>⚡ TRX Miner</h1>
+<p id="balance">0</p>
+
+<button onclick="mine()">⛏️ Minar</button>
+
+<script>
+const tg = window.Telegram.WebApp
+const user = tg.initDataUnsafe.user
+
+let telegramId = user.id
+let username = user.username
+
+const urlParams = new URLSearchParams(window.location.search)
+const ref = urlParams.get('ref')
+
+async function init(){
+  let res = await fetch("https://TU_API.com/user", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ telegramId, username, ref })
+  })
+
+  let data = await res.json()
+  document.getElementById("balance").innerText = data.balance.toFixed(2)
+}
+
+async function mine(){
+  let res = await fetch("https://TU_API.com/mine", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ telegramId })
+  })
+
+  let data = await res.json()
+  document.getElementById("balance").innerText = data.balance.toFixed(2)
+}
+
+init()
+</script>
+
+</body>
+</html>
